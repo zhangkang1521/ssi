@@ -15,6 +15,28 @@
          http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
          ">
 
+    <context:component-scan base-package="org.zk"/>
+
+    <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          destroy-method="close">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <bean id="sessionFactory"
+          class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:**/*.xml"></property>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.zk.dao" />
+        <property name="sqlSessionFactoryBeanName" value="sessionFactory"></property>
+    </bean>
+
 
 </beans>
 
