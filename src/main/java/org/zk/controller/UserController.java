@@ -19,9 +19,13 @@ public class UserController {
     UserDao userDao;
 
     @RequestMapping("/list")
+    public String list() {
+        return "user/list";
+    }
+
+    @RequestMapping("/list2")
     @ResponseBody
-    public Result list() {
-        throw new RuntimeException("xxx");
-//        return new Result();
+    public User list2() {
+        return new User();
     }
 }
